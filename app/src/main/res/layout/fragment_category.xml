@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    >
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_category"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:background="@color/white"
+            >
+
+
+        </android.support.v7.widget.RecyclerView>
+
+
+
+
+
+            <com.cjj.MaterialRefreshLayout
+                android:id="@+id/refresh_layout"
+                android:layout_width="0dp"
+                android:layout_weight="7"
+                android:layout_height="match_parent"
+                app:overlay="false"
+                app:wave_show="false"
+                app:progress_colors="@array/material_colors"
+                app:wave_height_type="higher"
+                app:progress_show_circle_backgroud="false"
+                >
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview_sub_cate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </android.support.v7.widget.RecyclerView>
+
+
+            </com.cjj.MaterialRefreshLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>
