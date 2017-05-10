@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/MyCustomShop.iml" filepath="$PROJECT_DIR$/MyCustomShop.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/cniao5-shop-master.iml" filepath="$PROJECT_DIR$/cniao5-shop-master.iml" />
     </modules>
   </component>
 </project>

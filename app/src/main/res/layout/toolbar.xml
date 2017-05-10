@@ -10,12 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:gravity="center"
         android:layout_centerVertical="true"
-        android:drawableLeft="@mipmap/icon_search"
         style="@style/search_view"
-        android:hint="搜索供应商"
+        android:hint="搜索商品"
         android:drawablePadding="8dp"
-        android:textColorHint="@color/silver"
         android:visibility="gone"
         />
 
@@ -33,9 +32,20 @@
 
     <Button
         android:id="@+id/toolbar_rightButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        style="@android:style/Widget.Material.Toolbar.Button.Navigation"
+        />
+
+    <Button
+        android:id="@+id/toolbar_leftButton"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:textColor="@color/white"
         android:visibility="gone"

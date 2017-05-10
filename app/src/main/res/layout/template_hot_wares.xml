@@ -68,19 +68,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/ware_price"
-
                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 />
 
             <Button
+                android:textSize="14sp"
                 android:id="@+id/btn_add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/bigRedButton"
                 android:layout_marginTop="20dp"
                 android:text="立即购买"
-
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 />

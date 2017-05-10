@@ -42,11 +42,12 @@ public abstract class BaseAdapter<T,H extends BaseViewHolder> extends RecyclerVi
 
         this.mContext = context;
 
+        this.mDatas = datas;
+
         this.mLayoutInflater = LayoutInflater.from(context);
 
         this.mLayouResid = layoutResid;
 
-        this.mDatas = datas;
     }
 
     @Override
@@ -79,9 +80,6 @@ public abstract class BaseAdapter<T,H extends BaseViewHolder> extends RecyclerVi
     /*changyong de fangfa*/
 
     public void clear(){
-//        int itemCount = datas.size();
-//        datas.clear();
-//        this.notifyItemRangeRemoved(0,itemCount);
 
         for (Iterator it = mDatas.iterator(); it.hasNext();){
 

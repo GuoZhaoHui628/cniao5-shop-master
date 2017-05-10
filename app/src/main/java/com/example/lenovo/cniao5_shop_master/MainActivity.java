@@ -1,6 +1,7 @@
 package com.example.lenovo.cniao5_shop_master;
 
 
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,6 +29,9 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost mTabhost;
     private LayoutInflater mInflater;
     private List<Tab> mTabs = new ArrayList<Tab>(5);
+
+    private CartFragment cartFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,28 @@ public class MainActivity extends AppCompatActivity {
             tabSpec.setIndicator(getIndicator(tab));
             mTabhost.addTab(tabSpec, tab.getFragment(), null);
         }
+
+        mTabhost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String s) {
+
+                if(s==getString(R.string.cart)){
+
+                    if(cartFragment == null){
+
+                       Fragment fragment  =  getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
+                       if(fragment!=null){
+                           CartFragment cartFragment = (CartFragment) fragment;
+                           cartFragment.refreshData();
+                       }
+                    }else{
+                        cartFragment.refreshData();
+                    }
+
+                }
+
+            }
+        });
 
         mTabhost.getTabWidget().setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
     }

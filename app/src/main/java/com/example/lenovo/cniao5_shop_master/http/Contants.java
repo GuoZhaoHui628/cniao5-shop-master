@@ -18,5 +18,6 @@ public class Contants {
 
        public static final String CATEGORY_LIST=BASE_URL +"category/list";
 
+       public static final String WARES_LIST=BASE_URL +"wares/list";
     }
 }

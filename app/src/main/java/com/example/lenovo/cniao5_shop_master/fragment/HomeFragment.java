@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_home, null);
+        view = inflater.inflate(R.layout.fragment_home, container,false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
 
         requestCatgoryDatas();
@@ -70,8 +70,7 @@ public class HomeFragment extends Fragment {
            @Override
            public void onSuccess(Response response, List<HomeCampaign> homeCampaigns) {
 
-                     homeCampaignList = homeCampaigns;
-                     showRecyHomeCompaign(homeCampaignList);
+                     showRecyHomeCompaign(homeCampaigns);
            }
 
            @Override
@@ -86,9 +85,7 @@ public class HomeFragment extends Fragment {
     public void showRecyHomeCompaign(List<HomeCampaign> homeCampaigns){
         homeCatgoryAdapter = new HomeCatgoryAdapter(homeCampaigns,getContext());
         mRecyclerView.setAdapter(homeCatgoryAdapter);
-
         mRecyclerView.addItemDecoration(new CardViewtemDecortion());
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
     }

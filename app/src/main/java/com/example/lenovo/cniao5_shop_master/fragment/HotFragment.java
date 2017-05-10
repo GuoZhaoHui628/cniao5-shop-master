@@ -15,8 +15,8 @@ import android.widget.Toast;
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.example.lenovo.cniao5_shop_master.R;
-import com.example.lenovo.cniao5_shop_master.adapter.HWAdapter;
 import com.example.lenovo.cniao5_shop_master.adapter.HotWaresAdapter;
+import com.example.lenovo.cniao5_shop_master.adapter.decoration.CardViewtemDecortion;
 import com.example.lenovo.cniao5_shop_master.bean.Page;
 import com.example.lenovo.cniao5_shop_master.bean.Wares;
 import com.example.lenovo.cniao5_shop_master.http.Contants;
@@ -35,14 +35,17 @@ public class HotFragment extends Fragment {
     private int curPage = 1 ;
     private int pageSize = 10;
 
-    private int pageCounts;
+    private int pageCounts=1;
 
+    @ViewInject(R.id.recyclerview)
     private RecyclerView mRecycleView;
 
     private HotWaresAdapter mHotWareAdapter;
 
     private List<Wares> waresDatas;
 
+
+    @ViewInject(R.id.refresh_view)
     private MaterialRefreshLayout mRefreshLayout;
 
 
@@ -53,17 +56,14 @@ public class HotFragment extends Fragment {
     private int state=STATE_NORMAL;
 
 
-    @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_hot, container,false);  //zhuyi
 
+        ViewUtils.inject(this,view);
+
         requestDatas();
 
-       mRecycleView = (RecyclerView) view.findViewById(R.id.recyclerview);
-
-        mRefreshLayout = (MaterialRefreshLayout) view.findViewById(R.id.refresh_view);
         initRefreshView();
 
         return view;
@@ -71,13 +71,9 @@ public class HotFragment extends Fragment {
 
     public void requestDatas(){
 
-
         String url = Contants.API.WARES_HOT+"?curPage="+curPage+"&pageSize="+pageSize;
 
-//        Log.i("haha", url);
-
         okHttpHelper.get(url, new SpotsCallBack<Page<Wares>>(getContext()) {
-
 
             @Override
             public void onSuccess(Response response, Page<Wares> waresPage) {
@@ -85,10 +81,7 @@ public class HotFragment extends Fragment {
                 curPage = waresPage.getCurrentPage();
                 pageCounts = waresPage.getTotalPage();
 
-                Log.i("haha", curPage+"");
-                Log.i("haha", pageCounts+"");
-
-                showRecyHotData(waresDatas);
+                showRecyHotData();
             }
 
             @Override
@@ -101,20 +94,15 @@ public class HotFragment extends Fragment {
     }
 
 
-    public void showRecyHotData(List<Wares> mDatas){
+    public void showRecyHotData(){
 
         switch (state){
             case STATE_NORMAL:
 
-//                mHotWareAdapter = new HotWaresAdapter(mDatas);
-//
-//                mRecycleView.setAdapter(mHotWareAdapter);
-//
-//                mRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
-//                mRecycleView.setItemAnimator(new DefaultItemAnimator());
-
-                mRecycleView.setAdapter(new HWAdapter(mDatas,getActivity(),R.layout.template_hot_wares));
+                mHotWareAdapter = new HotWaresAdapter(waresDatas,getActivity());
+                mRecycleView.setAdapter(mHotWareAdapter);
                 mRecycleView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRecycleView.addItemDecoration(new CardViewtemDecortion());
                 mRecycleView.setItemAnimator(new DefaultItemAnimator());
 
                 break;
@@ -122,17 +110,15 @@ public class HotFragment extends Fragment {
             case STATE_REFREH:
 
                 mHotWareAdapter.clearData();
-                mHotWareAdapter.addData(mDatas);
-
+                mHotWareAdapter.addData(waresDatas);
                 mRecycleView.scrollToPosition(0);
-
                 mRefreshLayout.finishRefresh();
 
                 break;
 
             case STATE_MORE:
 
-                mHotWareAdapter.addData(mHotWareAdapter.getDatas().size(),mDatas);
+                mHotWareAdapter.addData(mHotWareAdapter.getDatas().size(),waresDatas);
                 mRecycleView.scrollToPosition(mHotWareAdapter.getDatas().size());
                 mRefreshLayout.finishRefreshLoadMore();
                 break;

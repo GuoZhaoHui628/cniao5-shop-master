@@ -4,12 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:gravity="center"
-
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardBackgroundColor="#fff"
     app:contentPadding="10dp"
-
     app:cardCornerRadius="4dp">
 
 
@@ -20,17 +18,21 @@
         android:layout_height="wrap_content">
 
 
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="热门活动"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:paddingTop="10dp"
+
+            <TextView
+                android:paddingBottom="6dp"
+                android:id="@+id/text_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="热门活动"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:paddingTop="10dp"
+                />
 
 
-            />
+
+
         <View
             style="@style/line_vertical"
             android:layout_marginBottom="10dp"

@@ -30,14 +30,11 @@ import android.os.Build;
 
 public class MyToolBar extends Toolbar {
 
-
-
     private LayoutInflater mInflater;
-
     private View mView;
     private TextView mTextTitle;
     private EditText mSearchView;
-    private Button mRightButton;
+    private Button mRightButton,mLeftButton;
 
 
     public MyToolBar(Context context) {
@@ -58,21 +55,25 @@ public class MyToolBar extends Toolbar {
             final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                     R.styleable.MyToolBar, defStyleAttr, 0);
 
+            //设置左边的button
+            final Drawable leftIcon = a.getDrawable(R.styleable.MyToolBar_leftButtonIcon);
+            if (leftIcon != null) {
+                setLeftButtonIcon(leftIcon);
+            }
 
+
+            //设置右边的button
             final Drawable rightIcon = a.getDrawable(R.styleable.MyToolBar_rightButtonIcon);
             if (rightIcon != null) {
-                //setNavigationIcon(navIcon);
                 setRightButtonIcon(rightIcon);
             }
 
 
+            //设置searchview 是否显示
             boolean isShowSearchView = a.getBoolean(R.styleable.MyToolBar_isShowSearchView,false);
-
             if(isShowSearchView){
-
                 showSearchView();
                 hideTitleView();
-
             }
 
 
@@ -91,17 +92,15 @@ public class MyToolBar extends Toolbar {
 
     private void initView() {
 
-
         if(mView == null) {
 
             mInflater = LayoutInflater.from(getContext());
             mView = mInflater.inflate(R.layout.toolbar, null);
 
-
             mTextTitle = (TextView) mView.findViewById(R.id.toolbar_title);
             mSearchView = (EditText) mView.findViewById(R.id.toolbar_searchview);
             mRightButton = (Button)mView.findViewById(R.id.toolbar_rightButton);
-
+            mLeftButton = (Button)mView.findViewById(R.id.toolbar_leftButton);
 
             LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
 
@@ -113,12 +112,30 @@ public class MyToolBar extends Toolbar {
     }
 
 
+    //这是左边的返回button
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    public void  setLeftButtonIcon(Drawable icon){
+        if(mLeftButton !=null){
+            mLeftButton.setBackgroundDrawable(icon);
+            mLeftButton.setVisibility(VISIBLE);
+        }
+    }
+
+    //左边button的点击事件
+    public  void setLeftButtonOnClickListener(View.OnClickListener li){
+        if(mLeftButton!=null){
+            mLeftButton.setOnClickListener(li);
+        }
+    }
+
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void  setRightButtonIcon(Drawable icon){
 
         if(mRightButton !=null){
 
-            mRightButton.setBackground(icon);
+            mRightButton.setBackgroundDrawable(icon);
+            //mRightButton.setBackground(icon);
             mRightButton.setVisibility(VISIBLE);
         }
 
@@ -130,8 +147,8 @@ public class MyToolBar extends Toolbar {
     }
 
 
-    public  void setRightButtonOnClickListener(OnClickListener li){
-
+    //右边button的点击事件
+    public  void setRightButtonOnClickListener(View.OnClickListener li){
         mRightButton.setOnClickListener(li);
     }
 
@@ -168,19 +185,13 @@ public class MyToolBar extends Toolbar {
             showTitleView();
         }
 
-
-
-
-
     }
 
 
 
     public  void showSearchView(){
-
         if(mSearchView !=null)
             mSearchView.setVisibility(VISIBLE);
-
     }
 
 
@@ -198,7 +209,6 @@ public class MyToolBar extends Toolbar {
     public void hideTitleView() {
         if (mTextTitle != null)
             mTextTitle.setVisibility(GONE);
-
     }
 
 

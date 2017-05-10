@@ -14,7 +14,7 @@ import java.util.List;
  * Abstract:
  */
 
-public class CategoryAdapter extends BaseAdapter<Category,BaseViewHolder> {
+public   class CategoryAdapter extends BaseAdapter<Category,BaseViewHolder> {
 
      private Context mContext;
 
@@ -27,12 +27,8 @@ public class CategoryAdapter extends BaseAdapter<Category,BaseViewHolder> {
     public void bindData(BaseViewHolder holder, final Category category) {
 
         holder.getTextView(R.id.tv_item_category).setText(category.getName());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext,category.getName(),Toast.LENGTH_SHORT).show();
-            }
-        });
+
+
 
     }
 }

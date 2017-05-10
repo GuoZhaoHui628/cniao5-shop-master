@@ -3,5 +3,6 @@
     <declare-styleable name="MyToolBar">
         <attr name="rightButtonIcon" format="reference" />
         <attr name="isShowSearchView" format="boolean" />
+        <attr name="leftButtonIcon" format="reference" />
     </declare-styleable>
 </resources>

@@ -8,13 +8,11 @@ import java.io.Serializable;
  */
 public class Wares implements Serializable {
 
-
     private Long id;
     private String name;
     private String imgUrl;
     private String description;
     private Float price;
-
 
     public Long getId() {
         return id;
@@ -54,5 +52,16 @@ public class Wares implements Serializable {
 
     public void setPrice(Float price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Wares{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

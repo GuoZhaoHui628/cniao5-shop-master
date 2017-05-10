@@ -56,4 +56,15 @@ public class Page<T> {
     public void setList(List<T> list) {
         this.list = list;
     }
+
+    @Override
+    public String toString() {
+        return "Page{" +
+                "currentPage=" + currentPage +
+                ", pageSize=" + pageSize +
+                ", totalPage=" + totalPage +
+                ", totalCount=" + totalCount +
+                ", list=" + list +
+                '}';
+    }
 }

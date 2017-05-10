@@ -1,13 +1,18 @@
 package com.example.lenovo.cniao5_shop_master.adapter;
 
+import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.lenovo.cniao5_shop_master.CartProvider;
 import com.example.lenovo.cniao5_shop_master.R;
+import com.example.lenovo.cniao5_shop_master.bean.ShoppingCart;
 import com.example.lenovo.cniao5_shop_master.bean.Wares;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -27,10 +32,15 @@ public class HotWaresAdapter extends RecyclerView.Adapter<HotWaresAdapter.ViewHo
 
     private LayoutInflater mInflater;
 
-    public HotWaresAdapter(List<Wares> wares){
+    private Context mContext;
 
+    private CartProvider provider;
+
+    public HotWaresAdapter(List<Wares> wares,Context context){
         mDatas = wares;
+        this.mContext = context;
 
+        provider = new CartProvider(context);
 
     }
 
@@ -45,12 +55,35 @@ public class HotWaresAdapter extends RecyclerView.Adapter<HotWaresAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Wares wares = getData(position);
+        final Wares wares = getData(position);
 
-        holder.draweeView.setImageURI(Uri.parse(wares.getImgUrl()));  //zhuyi zheli Fresco SimpleDrawView jiazai zai adapter zhong jiazai tupian de fangshi
+        holder.draweeView.setImageURI(Uri.parse(wares.getImgUrl()));
         holder.textTitle.setText(wares.getName());
         holder.textPrice.setText("￥"+wares.getPrice());
+        holder.btShop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                provider.put(converData(wares));
+                Toast.makeText(mContext,"添加成功",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+    }
+
+    public ShoppingCart converData(Wares bean){
+
+        ShoppingCart cart = new ShoppingCart();
+
+        cart.setId(bean.getId());
+        cart.setDescription(bean.getDescription());
+        cart.setImgUrl(bean.getImgUrl());
+        cart.setPrice(bean.getPrice());
+        cart.setName(bean.getName());
+
+        return cart;
 
     }
 
@@ -104,15 +137,16 @@ public class HotWaresAdapter extends RecyclerView.Adapter<HotWaresAdapter.ViewHo
         SimpleDraweeView draweeView;
         TextView textTitle;
         TextView textPrice;
+        Button btShop;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-
             draweeView = (SimpleDraweeView) itemView.findViewById(R.id.drawee_view);
             textTitle= (TextView) itemView.findViewById(R.id.text_title);
             textPrice= (TextView) itemView.findViewById(R.id.text_price);
+            btShop = (Button) itemView.findViewById(R.id.btn_add);
         }
     }
 }

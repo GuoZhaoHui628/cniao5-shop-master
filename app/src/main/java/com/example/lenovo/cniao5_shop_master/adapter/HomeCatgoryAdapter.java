@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lenovo.cniao5_shop_master.R;
 import com.example.lenovo.cniao5_shop_master.bean.HomeCampaign;
@@ -39,14 +40,54 @@ public class HomeCatgoryAdapter extends RecyclerView.Adapter<HomeCatgoryAdapter.
 
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 
         mInflater = LayoutInflater.from(parent.getContext());
         if(viewType==VIEW_TYPE_R){
-            return  new ViewHolder(mInflater.inflate(R.layout.template_home_cardview2,parent,false));
+            View view1 = mInflater.inflate(R.layout.template_home_cardview2,parent,false);
+            final ViewHolder vh1 = new ViewHolder(view1);
+            vh1.imageViewSmallTop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext,"position="+vh1.getAdapterPosition()+"  左边上方小图",Toast.LENGTH_SHORT).show();
+                }
+            });
+            vh1.imageViewSmallBottom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext,"position="+vh1.getAdapterPosition()+"  左边下方小图",Toast.LENGTH_SHORT).show();
+                }
+            });
+            vh1.imageViewBig.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext,"position="+vh1.getAdapterPosition()+"  右边大图",Toast.LENGTH_SHORT).show();
+                }
+            });
+            return  vh1;
         }else{
-            return  new ViewHolder(mInflater.inflate(R.layout.template_home_cardview,parent,false));
+            View view2 = mInflater.inflate(R.layout.template_home_cardview,parent,false);
+            final ViewHolder vh2 = new ViewHolder(view2);
+            vh2.imageViewSmallTop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext,"position="+vh2.getAdapterPosition()+"  右边上方小图",Toast.LENGTH_SHORT).show();
+                }
+            });
+            vh2.imageViewSmallBottom.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext,"position="+vh2.getAdapterPosition()+"  右边下方小图",Toast.LENGTH_SHORT).show();
+                }
+            });
+            vh2.imageViewBig.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext,"position="+vh2.getAdapterPosition()+"  左边大图",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            return  vh2;
         }
 
     }
