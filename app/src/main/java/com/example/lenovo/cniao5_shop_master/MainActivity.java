@@ -4,6 +4,7 @@ package com.example.lenovo.cniao5_shop_master;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private FragmentTabHost mTabhost;
     private LayoutInflater mInflater;
     private List<Tab> mTabs = new ArrayList<Tab>(5);
@@ -71,12 +73,17 @@ public class MainActivity extends AppCompatActivity {
 
                     if(cartFragment == null){
 
+                        Log.d(TAG, "----------null----------");
+
                        Fragment fragment  =  getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
                        if(fragment!=null){
+                           Log.d(TAG, "----------fragment!=null----------");
                            CartFragment cartFragment = (CartFragment) fragment;
                            cartFragment.refreshData();
                        }
                     }else{
+
+                        Log.d(TAG, "----------!!!null----------");
                         cartFragment.refreshData();
                     }
 

@@ -22,6 +22,7 @@ import com.example.lenovo.cniao5_shop_master.bean.ShoppingCart;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.db.annotation.Check;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.lidroid.xutils.view.annotation.event.OnClick;
 
 import java.util.List;
 
@@ -29,10 +30,15 @@ import java.util.List;
 /**
  * Created by lenovo on 2016/9/23.
  */
-public class CartFragment extends Fragment {
+public class CartFragment extends Fragment implements View.OnClickListener{
 
     private static final String TAG = "CartFragment";
     private View view;
+
+
+    public static final int ACTION_EDIT = 1;
+    public static final int ACTION_COMPLETE = 2;
+
 
     @ViewInject(R.id.recycler_view)
     private RecyclerView mRecyclerView;
@@ -49,6 +55,9 @@ public class CartFragment extends Fragment {
     @ViewInject(R.id.btn_del)
     private Button mBtnDel;
 
+    @ViewInject(R.id.bt_control)
+    private Button mBtControl;
+
 
     private CartAdapter mAdapter;
     private CartProvider cartProvider;
@@ -63,13 +72,8 @@ public class CartFragment extends Fragment {
 
         showData();
 
-        mBtnDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
+        mBtControl.setOnClickListener(this);
+        mBtControl.setTag(ACTION_EDIT);
         return view;
     }
 
@@ -83,6 +87,8 @@ public class CartFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST));
 
+        mAdapter.checkListener();
+
     }
 
 
@@ -92,8 +98,58 @@ public class CartFragment extends Fragment {
         List<ShoppingCart> carts = cartProvider.getAll();
         mAdapter.addData(carts);
 
+        mAdapter.checkListener();
+
         mAdapter.showTotalPrice();
+
 
     }
 
+    private void showDelete(){
+
+        mBtControl.setText("完成");
+        mBtnOrder.setVisibility(View.GONE);
+        mBtnDel.setVisibility(View.VISIBLE);
+        mTextTotal.setVisibility(View.GONE);
+
+        mCheckBox.setChecked(false);
+        mAdapter.checkAll_None(false);
+        mBtControl.setTag(ACTION_COMPLETE);
+    }
+
+    private void hideDelete(){
+
+        mBtControl.setText("编辑");
+        mBtnOrder.setVisibility(View.VISIBLE);
+        mBtnDel.setVisibility(View.GONE);
+        mTextTotal.setVisibility(View.VISIBLE);
+
+        mCheckBox.setChecked(true);
+        mAdapter.checkAll_None(true);
+        mBtControl.setTag(ACTION_EDIT);
+
+    }
+
+    @OnClick(R.id.btn_del)
+    public void deleCart(View view){
+
+        mAdapter.deleteCart();
+
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        int action = (int) view.getTag();
+        if(action==ACTION_EDIT){
+
+            showDelete();
+
+        }else if(action==ACTION_COMPLETE){
+
+            hideDelete();
+
+        }
+
+    }
 }

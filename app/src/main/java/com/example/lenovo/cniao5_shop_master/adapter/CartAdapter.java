@@ -17,7 +17,10 @@ import com.example.lenovo.cniao5_shop_master.bean.ShoppingCart;
 import com.example.lenovo.cniao5_shop_master.widget.NumberAddSubView;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.Iterator;
 import java.util.List;
+
+import static com.example.lenovo.cniao5_shop_master.R.string.cart;
 
 /**
  * Created by ${GuoZhaoHui} on 2017/5/9.
@@ -55,7 +58,7 @@ public class CartAdapter extends BaseAdapter<ShoppingCart,BaseViewHolder> implem
         showTotalPrice();
     }
 
-    private void checkAll_None(Boolean flag){
+    public void checkAll_None(Boolean flag){
 
         if(cartList!=null){
             int i=0;
@@ -68,6 +71,45 @@ public class CartAdapter extends BaseAdapter<ShoppingCart,BaseViewHolder> implem
             }
         }
     }
+
+
+    public void deleteCart(){
+
+//        if(cartList!=null){
+//
+//            //采取这种办法循环遍历集合删除会报错，特别注意
+//            for(ShoppingCart cart:cartList){
+//
+//                int position = cartList.indexOf(cart);
+//                provider.delete(cart);
+//                cartList.remove(cart);
+//                notifyItemRemoved(position);
+//
+//            }
+//
+//        }
+
+        if(cartList!=null){
+
+            for(Iterator iterator = cartList.iterator();iterator.hasNext();){
+
+                ShoppingCart cart = (ShoppingCart) iterator.next();
+                if(cart.isChecked()){
+                    int position = cartList.indexOf(cart);
+                    provider.delete(cart);
+                    iterator.remove();
+                    notifyItemRemoved(position);
+
+                }
+            }
+
+            }
+
+        }
+
+
+
+
 
     @Override
     public void bindData(BaseViewHolder holder, final ShoppingCart shoppingCart) {
@@ -146,7 +188,7 @@ public class CartAdapter extends BaseAdapter<ShoppingCart,BaseViewHolder> implem
     }
 
 
-    private void checkListener(){
+    public void checkListener(){
 
         int size = 0;
         int checkCount = 0;
